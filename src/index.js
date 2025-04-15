@@ -60,7 +60,7 @@ app.use("/api/jobs", jobsRouter);
 app.use("/api/applications", applicationsRouter);  
 
 app.get("/", (req, res) => {
-   req.user ? res.send(`Hello World ${req.user.email}!`) : res.send("Hello World!");
+   res.send("Hello World!");
 });
 
 app.post('/files', upload.single('file'), async function (req, res, ) {
@@ -143,26 +143,3 @@ const PORT = process.env.PORT || 5001;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));  
 
 
-// {
-//    "title": "Backend Developer ",
-//    "company": "SBN-dev company ",
-//    "description": "Nextjs and Expres developer",
-//    "location": "Enugu",
-//    "requirements": ["passport", "mongodb", "session"],
-//    "salary": "$2000"
-//  }
-
-// http://localhost:3000/api/applications/67e935f14854cc92f2790590/apply
-
-// {
-//    "resume": "This is my full my Resume.pdf",
-//    "coverLetter": "this is my Cover-Letter"
-//  }
-
-// {
-//    "name": "Chiamaka",
-//    "email": "chiamaka@gmail.com",
-//    "password": "1234"
-//  }
-
-// http://localhost:3000/api/applications/67e85b8e7883fc77cb318737/status
