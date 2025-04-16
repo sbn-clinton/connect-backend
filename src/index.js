@@ -38,17 +38,27 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(bodyParser.json());
 app.use(urlencoded({ extended: true }));
-app.use(cors({ credentials: true, origin: process.env.FRONTEND_URL }));
-app.use(session({ secret: "your_secret", resave: false, saveUninitialized: false, 
-   store: MongoStore.create({ 
-      client: mongoose.connection.getClient(),
-      collection: "sessions",
-    }),
-   cookie: { secure: true,
-     domain: process.env.FRONTEND_URL,
-     sameSite: 'none',
-    httpOnly: true, maxAge: 1000 * 60 * 60 * 24}, // 1-day expiration
+app.use(cors({
+  origin: process.env.FRONTEND_URL || 'http://localhost:3000',
+  credentials: true // Essential for cookies
 }));
+// Configure sessions with proper cookie settings
+app.use(session({ 
+  secret: process.env.SESSION_SECRET, 
+  resave: false, 
+  saveUninitialized: false, 
+  store: MongoStore.create({ 
+    client: mongoose.connection.getClient(),
+    collection: "sessions",
+  }),
+  cookie: { 
+    secure: process.env.NODE_ENV === 'production', // true in production
+    httpOnly: true, 
+    maxAge: 1000 * 60 * 60 * 24,
+    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax'
+  }
+}));
+
 // 1000 * 60 * 60 * 24 = 1 day
 app.use(passport.authenticate('session'));
 app.use(passport.initialize());
