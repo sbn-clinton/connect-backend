@@ -52,10 +52,10 @@ app.use(session({
     collection: "sessions",
   }),
   cookie: { 
-    secure: false, // true in production
+    secure: process.env.NODE_ENV === 'production', // true in production
     httpOnly: true, 
     maxAge: 1000 * 60 * 60 * 24,
-    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax'
+    sameSite:  'none' 
   }
 }));
 
