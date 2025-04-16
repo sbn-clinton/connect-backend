@@ -42,7 +42,9 @@ app.use(session({ secret: "your_secret", resave: false, saveUninitialized: false
       client: mongoose.connection.getClient(),
       collection: "sessions",
     }),
-   cookie: { secure: false, httpOnly: true, maxAge: 1000 * 60 * 60 * 24}, // 1-day expiration
+   cookie: { secure: true,
+     domain: process.env.FRONTEND_URL,
+    httpOnly: true, maxAge: 1000 * 60 * 60 * 24}, // 1-day expiration
 }));
 // 1000 * 60 * 60 * 24 = 1 day
 app.use(cookieParser());
