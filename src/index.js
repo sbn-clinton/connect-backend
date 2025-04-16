@@ -39,7 +39,7 @@ app.use(express.json());
 app.use(bodyParser.json());
 app.use(urlencoded({ extended: true }));
 app.use(cors({
-  origin: 'http://localhost:3000',
+  origin: 'https://connect-frontend-client.vercel.app',
   credentials: true // Essential for cookies
 }));
 // Configure sessions with proper cookie settings
