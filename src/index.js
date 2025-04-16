@@ -33,6 +33,8 @@ mongoose.connect(process.env.MONGO_URI, {
 const app = express();
 
 // Middleware
+
+app.use(cookieParser());
 app.use(express.json());
 app.use(bodyParser.json());
 app.use(urlencoded({ extended: true }));
@@ -44,10 +46,10 @@ app.use(session({ secret: "your_secret", resave: false, saveUninitialized: false
     }),
    cookie: { secure: true,
      domain: process.env.FRONTEND_URL,
+     sameSite: 'none',
     httpOnly: true, maxAge: 1000 * 60 * 60 * 24}, // 1-day expiration
 }));
 // 1000 * 60 * 60 * 24 = 1 day
-app.use(cookieParser());
 app.use(passport.authenticate('session'));
 app.use(passport.initialize());
 app.use(passport.session());
