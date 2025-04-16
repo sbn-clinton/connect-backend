@@ -8,6 +8,8 @@ export const employeerAuthMiddleware = (req, res, next) => {
 
 
 export const jobSeekerAuthMiddleware = (req, res, next) => {
+  console.log('Authenticated:', req.isAuthenticated());
+  console.log('User:', req.user);
   if (req.isAuthenticated() && req.user.role === "jobseeker") {
     return next();
   }
