@@ -33,6 +33,12 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use((req, res, next) => {
+  console.log("Cookies:", req.cookies);
+  console.log("Session:", req.session);
+  console.log("User:", req.user);
+  next();
+});
 
 
 dotenv.config();
@@ -71,9 +77,10 @@ app.use(session({
   }
 })); 
 // 1000 * 60 * 60 * 24 = 1 day
+
+app.use(passport.initialize());
 app.use(passport.session());
 app.use(passport.authenticate('session'));
-app.use(passport.initialize());
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
