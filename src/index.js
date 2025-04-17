@@ -23,8 +23,8 @@ dotenv.config();
 const app = express();
 
 app.use(cors({
+  credentials: true, // Essential for cookies
   origin: 'https://connect-frontend-client.vercel.app',
-  credentials: true // Essential for cookies
 }));
 
 // Connect to MongoDB

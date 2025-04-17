@@ -41,7 +41,9 @@ router.post('/login',
       jobs: req.user.jobs,
       applications: req.user.applications,
     };
-    
+    console.log("Login route hit");
+    console.log("User:", req.user);
+    console.log("Session after login:", req.session);
     res.status(201).json({ message: "Logged in successfully",  user: newUser });
   });
 
