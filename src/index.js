@@ -20,17 +20,22 @@ import { Application, User } from "./models/schema.js";
 
 
 dotenv.config();
+const app = express();
+
+app.use(cors({
+  origin: 'https://connect-frontend-client.vercel.app',
+  credentials: true // Essential for cookies
+}));
 
 // Connect to MongoDB
 mongoose.connect(process.env.MONGO_URI, {
-   
    serverSelectionTimeoutMS: 20000, // Increases timeout
    socketTimeoutMS: 45000,
  })
    .then(() => console.log("MongoDB Connected"))
    .catch((err) => console.error(err));
 
-const app = express();
+
 
 // Middleware
 
@@ -38,10 +43,7 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(bodyParser.json());
 app.use(urlencoded({ extended: true }));
-app.use(cors({
-  origin: 'https://connect-frontend-client.vercel.app',
-  credentials: true // Essential for cookies
-}));
+
 // Configure sessions with proper cookie settings
 app.use(session({ 
   secret: process.env.SESSION_SECRET, 
@@ -54,12 +56,12 @@ app.use(session({
   cookie: { 
     secure: process.env.NODE_ENV === 'production', // true in production
     httpOnly: true, 
-    maxAge: 1000 * 60 * 60 * 24,
+    maxAge: 1000 * 60 * 60 * 24, // 1 day
     sameSite:  'none' 
   }
-}));
-
+})); 
 // 1000 * 60 * 60 * 24 = 1 day
+
 app.use(passport.authenticate('session'));
 app.use(passport.initialize());
 app.use(passport.session());
