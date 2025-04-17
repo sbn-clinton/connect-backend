@@ -24,28 +24,26 @@ router.post("/register", async (req, res) => {
 router.post('/login', 
   passport.authenticate('local'),
   function(req, res) {
-    // const newUser = {
-    //   _id: req.user._id,
-    //   fullName: req.user.fullName,
-    //   email: req.user.email,
-    //   role: req.user.role,
-    //   phoneNumber: req.user.phoneNumber,
-    //   bio: req.user.bio,
-    //   location: req.user.location,
-    //   qualifications: req.user.qualifications,
-    //   skills: req.user.skills,
-    //   experience: req.user.experience,
-    //   socialLinks: req.user.socialLinks,
-    //   profilePicture: req.user.profilePicture,
-    //   notifications: req.user.notifications,
-    //   jobs: req.user.jobs,
-    //   applications: req.user.applications,
-    // };
-    console.log("Login route hit");
-    console.log("User:", req.user);
-    console.log("Session after login:", req.session);
-    res.status(201).json({ message: "Logged in successfully",  user: req.user });
-  });
+    const newUser = {
+      _id: req.user._id,
+      fullName: req.user.fullName,
+      email: req.user.email,
+      role: req.user.role,
+      phoneNumber: req.user.phoneNumber,
+      bio: req.user.bio,
+      location: req.user.location,
+      qualifications: req.user.qualifications,
+      skills: req.user.skills,
+      experience: req.user.experience,
+      socialLinks: req.user.socialLinks,
+      profilePicture: req.user.profilePicture,
+      notifications: req.user.notifications,
+      jobs: req.user.jobs,
+      applications: req.user.applications,
+    };
+    
+    res.status(201).json({ message: "Logged in successfully",  user: newUser });
+  })
 
 
 router.get("/status", async (req, res) => {

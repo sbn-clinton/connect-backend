@@ -21,13 +21,14 @@ import { Application, User } from "./models/schema.js";
 
 const app = express();
 
+
+dotenv.config();
+
 app.use(cors({
-  
-  origin: 'https://connect-frontend-client.vercel.app',
+  origin: "https://connect-frontend-client.vercel.app",
   credentials: true, // Essential for cookies
 }));
 
-app.set("trust proxy", 1);
 
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Credentials", "true");
@@ -43,7 +44,6 @@ app.use((req, res, next) => {
 });
 
 
-dotenv.config();
 
 // Connect to MongoDB
 mongoose.connect(process.env.MONGO_URI, {
@@ -63,21 +63,25 @@ app.use(bodyParser.json());
 app.use(urlencoded({ extended: true }));
 
 // Configure sessions with proper cookie settings
-app.use(session({ 
-  secret: process.env.SESSION_SECRET, 
-  resave: false, 
-  saveUninitialized: false, 
-  store: MongoStore.create({ 
-    client: mongoose.connection.getClient(),
-    collection: "sessions",
-  }),
-  cookie: { 
-    secure: true, // true in production
-    httpOnly: true, 
-    maxAge: 1000 * 60 * 60 * 24, // 1 day
-    sameSite:  'none' 
-  }
-})); 
+app.set('trust proxy', 1); // keep this!
+
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    store: MongoStore.create({
+      mongoUrl: process.env.MONGO_URI,
+    }),
+    cookie: {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production', // ✅ Boolean, not string!
+      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+      maxAge: 1000 * 60 * 60 * 24, // 1 day
+    },
+  })
+);
+
 // 1000 * 60 * 60 * 24 = 1 day
 
 app.use(passport.initialize());

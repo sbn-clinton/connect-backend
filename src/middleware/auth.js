@@ -1,7 +1,6 @@
 export const employeerAuthMiddleware = (req, res, next) => {
   console.log("Cookies:", req.cookies);
   console.log("Session:", req.session);
-  console.log("User:", req.user);
   if (req.isAuthenticated() && req.user.role === "employer") {
     return next();
   }
@@ -12,7 +11,6 @@ export const employeerAuthMiddleware = (req, res, next) => {
 export const jobSeekerAuthMiddleware = (req, res, next) => {
   console.log("Cookies:", req.cookies);
   console.log("Session:", req.session);
-  console.log("User:", req.user);
   if (req.isAuthenticated() && req.user.role === "jobseeker") {
     return next();
   }
@@ -22,7 +20,6 @@ export const jobSeekerAuthMiddleware = (req, res, next) => {
 export const authMiddleware = (req, res, next) => {
   console.log("Cookies:", req.cookies);
   console.log("Session:", req.session);
-  console.log("User:", req.user);
   if (req.isAuthenticated()) {
     return next();
   }
