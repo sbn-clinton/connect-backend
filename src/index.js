@@ -27,6 +27,8 @@ app.use(cors({
   credentials: true, // Essential for cookies
 }));
 
+app.set("trust proxy", 1);
+
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Credentials", "true");
   res.header("Access-Control-Allow-Origin", "https://connect-frontend-client.vercel.app");
