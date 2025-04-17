@@ -20,13 +20,13 @@ import { comparePassword } from "../utils/helpers.js";
   }));
 
   passport.serializeUser((user, done) => {
-    done(null, user.id);
+    done(null, user);
   });
   
-  passport.deserializeUser(async (id, done) => {
+  passport.deserializeUser(async (user, done) => {
     try {
-      const user = await User.findById(id);
-    done(null, user);
+      const newuser = await User.findById(user._id);
+    done(null, newuser);
     } catch (error) {
       done(error, false);
     }

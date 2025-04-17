@@ -19,7 +19,6 @@ import { FileModel} from "./models/schema.js";
 import { Application, User } from "./models/schema.js";
 
 
-dotenv.config();
 const app = express();
 
 app.use(cors({
@@ -27,6 +26,16 @@ app.use(cors({
   origin: 'https://connect-frontend-client.vercel.app',
   credentials: true, // Essential for cookies
 }));
+
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Credentials", "true");
+  res.header("Access-Control-Allow-Origin", "https://connect-frontend-client.vercel.app");
+  next();
+});
+
+
+
+dotenv.config();
 
 // Connect to MongoDB
 mongoose.connect(process.env.MONGO_URI, {
@@ -55,17 +64,17 @@ app.use(session({
     collection: "sessions",
   }),
   cookie: { 
-    secure: process.env.NODE_ENV === 'production', // true in production
+    secure: true, // true in production
     httpOnly: true, 
     maxAge: 1000 * 60 * 60 * 24, // 1 day
     sameSite:  'none' 
   }
 })); 
 // 1000 * 60 * 60 * 24 = 1 day
-
+app.use(passport.session());
 app.use(passport.authenticate('session'));
 app.use(passport.initialize());
-app.use(passport.session());
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
