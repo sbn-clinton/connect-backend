@@ -25,8 +25,10 @@ const app = express();
 dotenv.config();
 
 app.use(cors({
-  origin: "https://connect-frontend-client.vercel.app",
-  credentials: true, // Essential for cookies
+  origin: process.env.NODE_ENV === 'production' 
+    ? process.env.FRONTEND_URL // Add this to your .env
+    : "http://localhost:3000",
+  credentials: true,
 }));
 
 
@@ -75,10 +77,11 @@ app.use(
     }),
     cookie: {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production', // ✅ Boolean, not string!
+      secure: process.env.NODE_ENV === 'production',
       sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
       maxAge: 1000 * 60 * 60 * 24, // 1 day
-    },
+      domain: process.env.NODE_ENV === 'production' && '.vercel.app' // Adjust if using custom domain
+    }
   })
 );
 
