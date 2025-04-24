@@ -25,18 +25,16 @@ const app = express();
 dotenv.config();
 
 app.use(cors({
-  origin: process.env.NODE_ENV === 'production' 
-    ? process.env.FRONTEND_URL // Add this to your .env
-    : "http://localhost:3000",
+  origin:  "https://connect-frontend-client.vercel.app",
   credentials: true,
 }));
 
 
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Credentials", "true");
-  res.header("Access-Control-Allow-Origin", "https://connect-frontend-client.vercel.app");
-  next();
-});
+// app.use((req, res, next) => {
+//   res.header("Access-Control-Allow-Credentials", "true");
+//   res.header("Access-Control-Allow-Origin", "https://connect-frontend-client.vercel.app");
+//   next();
+// });
 
 app.use((req, res, next) => {
   console.log("Cookies:", req.cookies);
@@ -48,10 +46,7 @@ app.use((req, res, next) => {
 
 
 // Connect to MongoDB
-mongoose.connect(process.env.MONGO_URI, {
-   serverSelectionTimeoutMS: 20000, // Increases timeout
-   socketTimeoutMS: 45000,
- })
+mongoose.connect(process.env.MONGO_URI)
    .then(() => console.log("MongoDB Connected"))
    .catch((err) => console.error(err));
 
