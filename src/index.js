@@ -27,7 +27,8 @@ dotenv.config();
 app.use(cors({
   origin:  "https://connect-frontend-client.vercel.app",
   credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  methods: ["get", "post", "put", "delete"],
+  // allowedHeaders: ["Content-Type", "Authorization", "Content-Length", "X-Requested-With"],
 }));
 
 
