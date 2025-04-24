@@ -27,6 +27,7 @@ dotenv.config();
 app.use(cors({
   origin:  "https://connect-frontend-client.vercel.app",
   credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
 }));
 
 
@@ -36,12 +37,7 @@ app.use(cors({
 //   next();
 // });
 
-app.use((req, res, next) => {
-  console.log("Cookies:", req.cookies);
-  console.log("Session:", req.session);
-  console.log("User:", req.user);
-  next();
-});
+
 
 
 
