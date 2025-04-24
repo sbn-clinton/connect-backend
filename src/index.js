@@ -39,14 +39,10 @@ app.use(cors({
 // });
 
 
-
-
-
 // Connect to MongoDB
 mongoose.connect(process.env.MONGO_URI)
    .then(() => console.log("MongoDB Connected"))
    .catch((err) => console.error(err));
-
 
 
 // Middleware
@@ -70,7 +66,7 @@ app.use(
     cookie: {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production', // Must be true in production
-      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax', // Critical for cross-domain
+      
       maxAge: 1000 * 60 * 60 * 24, // 1 day
       path: '/', // Ensure cookies are available across all paths
     },
@@ -78,7 +74,6 @@ app.use(
   })
 );
 
-// 1000 * 60 * 60 * 24 = 1 day
 
 app.use(passport.initialize());
 app.use(passport.session());
