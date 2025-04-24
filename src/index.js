@@ -69,11 +69,12 @@ app.use(
     }),
     cookie: {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+      secure: process.env.NODE_ENV === 'production', // Must be true in production
+      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax', // Critical for cross-domain
       maxAge: 1000 * 60 * 60 * 24, // 1 day
-      domain: process.env.NODE_ENV === 'production' && '.vercel.app' // Adjust if using custom domain
-    }
+      path: '/', // Ensure cookies are available across all paths
+    },
+    proxy: process.env.NODE_ENV === 'production', // Important when behind a proxy (like Vercel)
   })
 );
 
