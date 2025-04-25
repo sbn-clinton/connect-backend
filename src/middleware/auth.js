@@ -1,6 +1,7 @@
 export const employeerAuthMiddleware = (req, res, next) => {
   console.log("Cookies:", req.cookies);
   console.log("Session:", req.session);
+  console.log("User:", req.user);
   if (req.isAuthenticated() && req.user.role === "employer") {
     return next();
   }

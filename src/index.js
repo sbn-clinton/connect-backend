@@ -28,7 +28,7 @@ app.use(cors({
   origin:  "https://connect-frontend-client.vercel.app",
   credentials: true,
   methods: ["get", "post", "put", "delete"],
-  // allowedHeaders: ["Content-Type", "Authorization", "Content-Length", "X-Requested-With"],
+  allowedHeaders: ["Content-Type", "Authorization", "Content-Length", "X-Requested-With"],
 }));
 
 
@@ -66,7 +66,7 @@ app.use(
     cookie: {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production', // Must be true in production
-      
+      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax', // Critical for cross-domain
       maxAge: 1000 * 60 * 60 * 24, // 1 day
       path: '/', // Ensure cookies are available across all paths
     },
