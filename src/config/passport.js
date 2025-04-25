@@ -26,6 +26,7 @@ import { comparePassword } from "../utils/helpers.js";
   passport.deserializeUser(async (id, done) => {
     try {
       const user = await User.findById(id);
+      console.log(user);
       done(null, user); // ✅ Sets req.user
     } catch (error) {
       done(error, null);
