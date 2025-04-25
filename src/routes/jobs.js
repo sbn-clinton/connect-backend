@@ -20,7 +20,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.get("/my-job", employeerAuthMiddleware, async (req, res) => {
+router.get("/my-job",  async (req, res) => {
   const userId = req.user._id;
   try {
     const jobs = await Job.find({ postedBy: userId}).sort({ createdAt: -1 })
