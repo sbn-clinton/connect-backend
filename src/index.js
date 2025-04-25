@@ -25,10 +25,11 @@ const app = express();
 dotenv.config();
 
 app.use(cors({
-  origin:  "https://connect-frontend-client.vercel.app",
+  origin: "https://connect-frontend-client.vercel.app",
   credentials: true,
-  methods: ["get", "post", "put", "delete"],
-  allowedHeaders: ["Content-Type", "Authorization", "Content-Length", "X-Requested-With"],
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], // Uppercase + added OPTIONS
+  allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"],
+  exposedHeaders: ["Authorization", "Set-Cookie"] // 👈 Required for cookies/JWT
 }));
 
 
@@ -63,12 +64,14 @@ app.use(
     store: MongoStore.create({
       mongoUrl: process.env.MONGO_URI,
     }),
+    
     cookie: {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production', // Must be true in production
       sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax', // Critical for cross-domain
       maxAge: 1000 * 60 * 60 * 24, // 1 day
       path: '/', // Ensure cookies are available across all paths
+      domain: '.vercel.app'
     },
     proxy: process.env.NODE_ENV === 'production', // Important when behind a proxy (like Vercel)
   })
