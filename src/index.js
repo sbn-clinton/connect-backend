@@ -15,7 +15,6 @@ import { upload } from "./config/pdfUpload.js";
 import bodyParser from "body-parser";
 import path from "path";
 import { fileURLToPath } from "url";
-import { FileModel} from "./models/schema.js";
 import { Application, User } from "./models/schema.js";
 
 
@@ -23,10 +22,6 @@ const app = express();
 
 
 dotenv.config();
-
-
-
-
 
 
 // Connect to MongoDB
@@ -42,8 +37,6 @@ app.use(express.json());
 app.use(bodyParser.json());
 app.use(urlencoded({ extended: true }));
 
-// Configure sessions with proper cookie settings
-app.set('trust proxy', 1); // keep this!
 
 app.use(
   session({
@@ -60,7 +53,8 @@ app.use(
       sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax', // Critical for cross-domain
       maxAge: 1000 * 60 * 60 * 24, // 1 day
       path: '/', // Ensure cookies are available across all paths
-      // domain: '.vercel.app'
+      crossOrigin: true,
+      crossSite: true,
     },
     // proxy: process.env.NODE_ENV === 'production', // Important when behind a proxy (like Vercel)
   })
@@ -75,7 +69,7 @@ app.use(cors({
   origin: process.env.FRONTEND_URL,
   credentials: true,
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], // Uppercase + added OPTIONS
-  allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"],
+  
 }));
 
 
