@@ -10,7 +10,6 @@ import { comparePassword } from "../utils/helpers.js";
     if (!user) throw new Error("Invalid Credentials");
 
     if (!comparePassword(password, user.password))  throw new Error("Invalid Credentials");
-
     return done(null, user);
     } catch (error) {
       console.log(error);

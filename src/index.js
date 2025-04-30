@@ -70,7 +70,7 @@ app.use(
       sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax', // Critical for cross-domain
       maxAge: 1000 * 60 * 60 * 24, // 1 day
       path: '/', // Ensure cookies are available across all paths
-      domain: '.vercel.app'
+      // domain: '.vercel.app'
     },
     proxy: process.env.NODE_ENV === 'production', // Important when behind a proxy (like Vercel)
   })
