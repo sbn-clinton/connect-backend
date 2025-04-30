@@ -27,7 +27,7 @@ dotenv.config();
 app.use(cors({
   origin: process.env.FRONTEND_URL,
   credentials: true,
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], // Uppercase + added OPTIONS
+  // methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], // Uppercase + added OPTIONS
   // allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"],
 }));
 
@@ -72,7 +72,7 @@ app.use(
       path: '/', // Ensure cookies are available across all paths
       // domain: '.vercel.app'
     },
-    proxy: process.env.NODE_ENV === 'production', // Important when behind a proxy (like Vercel)
+    // proxy: process.env.NODE_ENV === 'production', // Important when behind a proxy (like Vercel)
   })
 );
 
