@@ -24,19 +24,9 @@ const app = express();
 
 dotenv.config();
 
-app.use(cors({
-  origin: process.env.FRONTEND_URL,
-  credentials: true,
-  // methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], // Uppercase + added OPTIONS
-  // allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"],
-}));
 
 
-// app.use((req, res, next) => {
-//   res.header("Access-Control-Allow-Credentials", "true");
-//   res.header("Access-Control-Allow-Origin", "https://connect-frontend-client.vercel.app");
-//   next();
-// });
+
 
 
 // Connect to MongoDB
@@ -81,6 +71,14 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(passport.authenticate('session'));
 
+app.use(cors({
+  origin: process.env.FRONTEND_URL,
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], // Uppercase + added OPTIONS
+  allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"],
+}));
+
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -95,52 +93,7 @@ app.get("/", (req, res) => {
    res.send("Hello World!");
 });
 
-app.post('/files', upload.single('file'), async function (req, res, ) {
-   console.log(req.file);
-   try {
-      const newFile = await FileModel.create({
-         name: req.file.originalname,
-         mimetype: req.file.mimetype,
-         size: req.file.size,
-         data: req.file.buffer,
-      });
-      res.status(201).json(newFile);
-   } catch (error) {
-      console.error(error);
-      res.status(500).json({ message: "Error uploading file" });
-   }
-})
 
-app.get("/files", async (req, res) => {
-  try {
-    const files = await FileModel.find();
-    res.status(200).json(files);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Error retrieving files" });
-  }
-});
-
-// Serve single image by ID
-app.get("/files/:id", async (req, res) => {
-   try {
-     const file = await FileModel.findById(req.params.id);
- 
-     if (!file) {
-       return res.status(404).send("File not found");
-     }
- 
-     res.set({
-       "Content-Type": file.mimetype,
-       "Content-Disposition": `inline; filename="${file.name}"`,
-     });
- 
-     res.send(file.data); // This sends the image buffer
-   } catch (error) {
-     console.error(error);
-     res.status(500).send("Error retrieving file");
-   }
- });
 
 // Update the GET route to match your storage structure
 app.get("/api/users-picture/:id", async (req, res) => {
