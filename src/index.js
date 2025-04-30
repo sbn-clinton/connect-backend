@@ -53,8 +53,7 @@ app.use(
       sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax', // Critical for cross-domain
       maxAge: 1000 * 60 * 60 * 24, // 1 day
       path: '/', // Ensure cookies are available across all paths
-      crossOrigin: true,
-      crossSite: true,
+      
     },
     // proxy: process.env.NODE_ENV === 'production', // Important when behind a proxy (like Vercel)
   })
@@ -71,6 +70,13 @@ app.use(cors({
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], // Uppercase + added OPTIONS
   
 }));
+
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", process.env.FRONTEND_URL);
+  res.header("Access-Control-Allow-Credentials", "true");
+  next();
+});
+
 
 
 const __filename = fileURLToPath(import.meta.url);
