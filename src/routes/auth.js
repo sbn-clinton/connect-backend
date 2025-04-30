@@ -41,7 +41,7 @@ router.post('/login',
       jobs: req.user.jobs,
       applications: req.user.applications,
     };
-
+    console.log(newUser);
     res.status(201).json({ message: "Logged in successfully",  user: newUser });
   })
 
