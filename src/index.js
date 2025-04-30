@@ -25,10 +25,10 @@ const app = express();
 dotenv.config();
 
 app.use(cors({
-  origin: " https://connect-frontend-client.vercel.ap",
+  origin: "https://connect-frontend-client.vercel.app",
   credentials: true,
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], // Uppercase + added OPTIONS
-  allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"],
+  // allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"],
 }));
 
 
