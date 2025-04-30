@@ -42,8 +42,6 @@ router.post('/login',
       applications: req.user.applications,
     };
 
-    req.session.user = newUser;
-    
     res.status(201).json({ message: "Logged in successfully",  user: newUser });
   })
 

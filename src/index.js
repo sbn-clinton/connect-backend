@@ -25,11 +25,10 @@ const app = express();
 dotenv.config();
 
 app.use(cors({
-  origin: "https://connect-frontend-client.vercel.app",
+  origin: " https://connect-frontend-client.vercel.ap",
   credentials: true,
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], // Uppercase + added OPTIONS
   allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"],
-  exposedHeaders: ["Authorization", "Set-Cookie"] // 👈 Required for cookies/JWT
 }));
 
 
